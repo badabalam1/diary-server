@@ -40,9 +40,10 @@ router.put('/:id', (req, res) => {
 
 router.delete('/:id', (req, res) => {
     var id = req.params.id;
-    Diary.remove({id : req.params.id}, (err) => {
+    Diary.findOne({_id : id}, (err, diary) => {
         if(err)
             res.json({result : {success : false, message : err.message}});
+        diary.remove();
         res.json({result : {success : true, message : '성공적으로 삭제되었습니다!'}});
     });
 });
