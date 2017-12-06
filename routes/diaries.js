@@ -7,7 +7,7 @@ router.get('/', (req, res) => {
         if(err)
             res.status(200).json({result : {success : false , message : err.message}});
         res.json({diaries : diaries, result : {success : true, message : '조회에 성공하였습니다.' }});
-    });
+    }).sort({date : -1});
 });
 
 router.get('/:id', (req, res) => {
