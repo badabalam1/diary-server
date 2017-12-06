@@ -20,6 +20,8 @@ router.get('/:id', (req, res) => {
 
 router.post('/', (req, res) => {
     Diary.create(req.body, (err, post) => {
+        req.body._id = undefined;
+        req.body.date = undefined;
         if(err)
             res.status(200).json({result : {success : false, message : err.message}});
         console.log(post);
