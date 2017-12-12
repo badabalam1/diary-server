@@ -1,9 +1,10 @@
 var express = require('express');
 var Diary = new require('../models/diary');
 var router = express.Router();
+var validator = require('../tools/validator');
 
-router.get('/', (req, res) => {
-    Diary.find({}, (err, diaries) => {
+router.get('/:username', (req, res) => {
+    Diary.find({username : req.params.username}, (err, diaries) => {
         if(err)
             res.status(200).json({result : {success : false , message : err.message}});
         res.json({diaries : diaries, result : {success : true, message : '조회에 성공하였습니다.' }});
@@ -19,6 +20,7 @@ router.get('/:id', (req, res) => {
 });
 
 router.post('/', (req, res) => {
+    if(!validator.isLogin(req, res)) return;
     req.body._id = undefined;
     req.body.date = undefined;
     Diary.create(req.body, (err, post) => {
@@ -30,21 +32,37 @@ router.post('/', (req, res) => {
 });
 
 router.put('/:id', (req, res) => {
+    if(!validator.isLogin(req, res)) return;
     var id = req.params.id;
-    Diary.update({_id : id}, req.body, (err, raw) => {
+    var diaryData = validator.checkData(req, res, 'diary', false);
+    if(!diaryData) return;
+    Diary.findOne({_id : id}, (err, diary) => {
         if(err)
-            res.status(200).json({result : {success : false, message : err.message}});
-        res.json({result : {success : true, message : '성공적으로 수정이 완료되었습니다.'}});
+            res.json({result : {success : false, message : '해당 내용을 찾을 수 없습니다!'}});
+        if(diary.username === req.user.username) {
+            Diary.update({_id: id}, diaryData, (err, raw) => {
+                if (err)
+                    res.status(200).json({result: {success: false, message: err.message}});
+                res.json({result: {success: true, message: '성공적으로 수정이 완료되었습니다.'}});
+            });
+        } else {
+            res.json({result : {success :false, message : '권한이 없습니다!'}});
+        }
     });
 });
 
 router.delete('/:id', (req, res) => {
+    if(!validator.isLogin(req, res)) return;
     var id = req.params.id;
     Diary.findOne({_id : id}, (err, diary) => {
         if(err)
             res.json({result : {success : false, message : err.message}});
-        diary.remove();
-        res.json({result : {success : true, message : '성공적으로 삭제되었습니다!'}});
+        if(req.user.username === diary.username) {
+            diary.remove();
+            res.json({result: {success: true, message: '성공적으로 삭제되었습니다!'}});
+        } else {
+            res.json({result : {success : false, message : '권한이 없습니다!'}});
+        }
     });
 });
 

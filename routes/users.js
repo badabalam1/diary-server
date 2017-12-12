@@ -4,7 +4,7 @@ var User = new require('../models/User');
 var validator = require('../tools/validator');
 
 router.post('/', (req, res) => {
-    var userData = validator.checkAccount(req, res, 'basic', true);
+    var userData = validator.checkData(req, res, 'basic', true);
     if(!userData) return;
     User.findOne({username : req.body.username}, (err, user) => {
         if(err)
@@ -41,7 +41,7 @@ router.get('/:username', (req, res) => {
 
 router.put('/:username', (req, res) => {
     if(!validator.isLogin(req, res)) return;
-    var userData = validator.checkAccount(req, res, 'basic', false);
+    var userData = validator.checkData(req, res, 'basic', false);
     if(!userData) return;
     console.log(userData);
     if (req.user.username === req.params.username) {

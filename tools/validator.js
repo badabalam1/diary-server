@@ -2,11 +2,15 @@ const CHECK_LIST = {
     basic: [
         { code: 1, property: 'username', reg: /^(?=.*)[a-zA-Z0-9]{6,20}$/, message: '6~20자 이내의 대소문자 & 숫자 조합인 ID가 필요합니다.' },
         { code: 2, property: 'password', reg: /^(?=.*[0-9])[a-zA-Z0-9!@#$%^&*]{6,20}$/, message: '6~20글자의 대소문자, 숫자가 포함된 암호가 필요합니다.' }
+    ],
+    diary : [
+        {code : 3, property : 'title', reg : /^.{1,20}$/, message : '제목은 20자 이내로 입력해야 합니다!'},
+        {code : 4, property : 'content', reg : /^.{1,1000}$/, message : '본문은 1000자 이내로 입력해야 합니다!'}
     ]
 };
 module.exports = {
 
-    checkAccount: (req, res, service, isStrict) => {
+    checkData: (req, res, service, isStrict) => {
         let result = {};
         for (let item of CHECK_LIST[service]) {
             // 해당 property가 존재하지 않을 시 isStrict가 true 면 정규식 검사 후 !false
