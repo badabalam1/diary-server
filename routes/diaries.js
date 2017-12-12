@@ -1,5 +1,5 @@
 var express = require('express');
-var Diary = require('../models/diary');
+var Diary = new require('../models/diary');
 var router = express.Router();
 
 router.get('/', (req, res) => {

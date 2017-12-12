@@ -6,9 +6,12 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var file = require('express-fileupload');
+var authentication = require('./tools/authentication');
 
 var index = require('./routes/index');
 var diaries = require('./routes/diaries');
+var users = require('./routes/users');
+var sign = require('./routes/sign');
 
 var app = express();
 mongoose.connect('mongodb://localhost:27017/diary');
@@ -26,6 +29,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(file());
+app.use(authentication);
 
 //안드로이드 지원을 위한 json 설정
 app.use((req, res, next) => {
@@ -33,8 +37,11 @@ app.use((req, res, next) => {
       req.body = JSON.parse(req.body.data);
     next();
 });
+
 app.use('/', index);
 app.use('/diaries', diaries);
+app.use('/users/', users);
+app.use('/sign', sign);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
