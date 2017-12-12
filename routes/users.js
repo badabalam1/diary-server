@@ -10,7 +10,7 @@ router.post('/', (req, res) => {
         if(err)
             res.status(200).json({result : {success : false, message : '알 수 없는 오류가 발생하였습니다!'}});
         if(!user) {
-                try {
+                if(req.files && req.files.profile)
                     req.files.profile.mv(`${__dirname}/../public/images/${userData.username}.jpg`, (err) => {
                         if (!err) {
                             var user = new User(userData);
@@ -20,7 +20,7 @@ router.post('/', (req, res) => {
                         else
                             res.status(200).json({status: {success: true, message: err.message}});
                     });
-                } catch(e) {
+                else {
                     res.json({result: {success: true, message: '프로필 이미지를 등록해주세요'}});
                 }
         } else
@@ -43,14 +43,18 @@ router.put('/:username', (req, res) => {
     if(!validator.isLogin(req, res)) return;
     var userData = validator.checkData(req, res, 'basic', false);
     if(!userData) return;
-    console.log(userData);
     if (req.user.username === req.params.username) {
         User.update({username: req.params.username}, userData, (err, user) => {
             if (err)
                 res.status(200).json({result: {success: false, message: '알 수 없는 오류가 발생하였습니다!'}});
             User.findOne({username : req.params.username}, (err, result) => {
-                if(err) throw err;
-                res.status(200).json({
+                if (err) throw err;
+                if (req.files && req.files.profile)
+                    req.files.profile.mv(`${__dirname}/../public/images/${req.params.username}.jpg`, (err) => {
+                        if(err)
+                            res.json({status: {success: true, message: err.message}});
+                    });
+                res.json({
                     result: {success: true, message: '성공적으로 업데이트 되었습니다!'},
                     user: result
                 });
