@@ -20,7 +20,7 @@ module.exports = {
             } else {
                 if (!isStrict && !req.body[item.property]) continue;
                 res.status(200).json({
-                    result: { success: false, message: `${item.property} : ${item.reg}` },
+                    result: { success: false, message: `${item.property} : ${item.message}` },
                     code: item.code
                 }).end();
                 return false;
