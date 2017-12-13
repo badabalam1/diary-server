@@ -4,8 +4,8 @@ const CHECK_LIST = {
         { code: 2, property: 'password', reg: /^(?=.*[0-9])[a-zA-Z0-9!@#$%^&*]{6,20}$/, message: '6~20글자의 대소문자, 숫자가 포함된 암호가 필요합니다.' }
     ],
     diary : [
-        {code : 3, property : 'title', reg : /^.{1,20}$/, message : '제목은 20자 이내로 입력해야 합니다!'},
-        {code : 4, property : 'content', reg : /^.{1,1000}$/, message : '본문은 1000자 이내로 입력해야 합니다!'}
+        {code : 3, property : 'title', reg : /^.{1,20}$/m, message : '제목은 20자 이내로 입력해야 합니다!'},
+        {code : 4, property : 'content', reg : /^.{1,1000}$/m, message : '본문은 1000자 이내로 입력해야 합니다!'}
     ]
 };
 module.exports = {
