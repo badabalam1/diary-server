@@ -20,7 +20,7 @@ module.exports = {
             } else {
                 if (!isStrict && !req.body[item.property]) continue;
                 res.status(200).json({
-                    status: { success: false, message: `${item.property} : ${item.reg}` },
+                    result: { success: false, message: `${item.property} : ${item.reg}` },
                     code: item.code
                 }).end();
                 return false;
@@ -32,7 +32,7 @@ module.exports = {
     isLogin: (req, res) => {
         if (req.user) return true;
         res.status(200).json({
-            status: { success: false, message: '로그인이 필요한 서비스입니다.' }
+            result: { success: false, message: '로그인이 필요한 서비스입니다.' }
         }).end();
         return false;
     },
@@ -40,7 +40,7 @@ module.exports = {
     isAdmin: (req, res) => {
         if (req.user.isAdmin === true) return true;
         res.status(200).json({
-            status: { success: false, message: '권한이 부족합니다.' }
+            result: { success: false, message: '권한이 부족합니다.' }
         }).end();
         return false;
     },
