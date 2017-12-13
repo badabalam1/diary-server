@@ -3,7 +3,7 @@ var Diary = new require('../models/diary');
 var router = express.Router();
 var validator = require('../tools/validator');
 
-router.get('/:username', (req, res) => {
+router.get('/users/:username', (req, res) => {
     Diary.find({username : req.params.username}, (err, diaries) => {
         if(err)
             res.status(200).json({result : {success : false , message : err.message}});
