@@ -69,7 +69,85 @@
 
 ### PUT
 **Request**
+
 ```
 headers:
   authorization : "token value"
 ```
+
+**Response**
+> 성공하였을 경우
+```json
+{
+  "result" : {
+     "success" : true,
+     "message" : "성공적으로 업데이트 되었습니다!"
+  }
+}
+```
+
+> 실패하였을 경우
+```json
+{
+  "result" : {
+     "success" : true,
+     "message" : "권한이 없습니다!"
+  }
+}
+```
+
+### DELETE
+***Request***
+
+```
+headers:
+  authorization : "token value"
+```
+
+**Response**
+> 성공하였을 경우
+```json
+{
+  "result" : {
+     "success" : true,
+     "message" : "성공적으로 계정을 삭제하였습니다!"
+  }
+}
+```
+
+> 실패하였을 경우
+```json
+{
+  "result" : {
+     "success" : true,
+     "message" : "권한이 없습니다!"
+  }
+}
+```
+
+## /sign
+### POST
+**Request**
+```json
+{
+  "username" : "사용자명",
+  "password" : "비밀번호"
+}
+```
+
+**Response**
+```json
+ "result" : {
+  "success" : true, 
+  "message" : "로그인에 성공하였습니다!"
+ },
+ "auth" : {
+  "token" : "token"
+  },
+  "user" : {
+    "username" : "사용자명"
+  }
+}
+```
+
+
