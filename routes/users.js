@@ -15,16 +15,16 @@ router.post('/', (req, res) => {
                         if (!err) {
                             var user = new User(userData);
                             user.save();
-                            res.json({status: {success: true, message: '등록에 성공하였습니다!'}});
+                            res.json({result: {success: true, message: '등록에 성공하였습니다!'}});
                         }
                         else
-                            res.status(200).json({status: {success: true, message: err.message}});
+                            res.status(200).json({result: {success: true, message: err.message}});
                     });
                 else {
                     res.json({result: {success: true, message: '프로필 이미지를 등록해주세요'}});
                 }
         } else
-            res.json({result : {status :false, message : '이미 존재하는 아이디입니다!'}});
+            res.json({result : {success :false, message : '이미 존재하는 아이디입니다!'}});
     });
 });
 
@@ -52,7 +52,7 @@ router.put('/:username', (req, res) => {
                 if (req.files && req.files.profile)
                     req.files.profile.mv(`${__dirname}/../public/images/${req.params.username}.jpg`, (err) => {
                         if(err)
-                            res.json({status: {success: true, message: err.message}});
+                            res.json({result: {success: true, message: err.message}});
                     });
                 res.json({
                     result: {success: true, message: '성공적으로 업데이트 되었습니다!'},
