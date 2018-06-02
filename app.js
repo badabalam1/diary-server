@@ -36,6 +36,13 @@ app.use('/diaries', diaries);
 app.use('/users/', users);
 app.use('/sign', sign);
 
+//안드로이드 지원을 위한 json 설정
+app.use((req, res, next) => {
+  if(req.body && req.body.data)
+    req.body = JSON.parse(req.body.data);
+  next();
+});
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
