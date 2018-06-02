@@ -8,7 +8,7 @@
 **Request**
 ```json
 {
-  "result " : {
+  {
     "username" : "사용자명(String)",
     "password" : "비밀번호(String)"
   }
