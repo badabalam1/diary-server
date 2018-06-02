@@ -31,13 +31,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(file());
 app.use(authentication);
 
-//안드로이드 지원을 위한 json 설정
-app.use((req, res, next) => {
-    if(req.body && req.body.data)
-      req.body = JSON.parse(req.body.data);
-    next();
-});
-
 app.use('/', index);
 app.use('/diaries', diaries);
 app.use('/users/', users);
