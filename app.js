@@ -40,7 +40,7 @@ app.use((req, res, next) => {
 
 app.use('/', index);
 app.use('/diaries', diaries);
-app.use('/users/', users);
+app.use('/users', users);
 app.use('/sign', sign);
 
 

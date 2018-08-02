@@ -52,7 +52,12 @@ router.put('/:username', (req, res) => {
                 if (req.files && req.files.profile)
                     req.files.profile.mv(`${__dirname}/../public/images/${req.params.username}.jpg`, (err) => {
                         if(err)
-                            res.json({result: {success: true, message: err.message}});
+                        let payload = {username : XPathResult.username};
+                        let token = jwt.sign(payload, config.salt, {algorithm : config.jwtAlgorithm} , {});            
+                            res.json({result: {
+                                success: true,
+                                message: err.message,
+                                token : token});
                     });
                 res.json({
                     result: {success: true, message: '성공적으로 업데이트 되었습니다!'},
