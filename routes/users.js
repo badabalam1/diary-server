@@ -63,7 +63,7 @@ router.put('/:username', (req, res) => {
                     let token = jwt.sign(payload, config.salt, {algorithm : config.jwtAlgorithm} , {});            
                         res.json({result: {
                             success: true,
-                            message: err.message,
+                            message: "성공적으로 업데이트 되었습니다!",
                             token : token}});;
             }).select('-_id')
         });
