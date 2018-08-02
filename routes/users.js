@@ -51,13 +51,16 @@ router.put('/:username', (req, res) => {
                 if (err) throw err;
                 if (req.files && req.files.profile)
                     req.files.profile.mv(`${__dirname}/../public/images/${req.params.username}.jpg`, (err) => {
-                        if(err)
-                        let payload = {username : XPathResult.username};
+                        if(err) {
+                            console.log(err);
+                            res.status(200).json({result: {success: false, message: '알 수 없는 오류가 발생하였습니다!'}});
+                        }
+                        let payload = {username : result.username};
                         let token = jwt.sign(payload, config.salt, {algorithm : config.jwtAlgorithm} , {});            
                             res.json({result: {
                                 success: true,
                                 message: err.message,
-                                token : token});
+                                token : token}});
                     });
                 res.json({
                     result: {success: true, message: '성공적으로 업데이트 되었습니다!'},
