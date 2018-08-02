@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 var User = new require('../models/User');
 var validator = require('../tools/validator');
+var jwt = require('jsonwebtoken');
+const config = require("../configs/config");
 
 router.post('/', (req, res) => {
     var userData = validator.checkData(req, res, 'basic', true);
