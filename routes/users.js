@@ -64,6 +64,7 @@ router.put('/:username', (req, res) => {
                         res.json({result: {
                             success: true,
                             message: "성공적으로 업데이트 되었습니다!",
+                            username:  username,
                             token : token}});;
             }).select('-_id')
         });
